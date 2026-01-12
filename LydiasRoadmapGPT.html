@@ -1,0 +1,1498 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Lydia’s January to November Roadmap (Interactive)</title>
+  <meta name="description" content="Interactive roadmap for legal strategy: judicial review and independent representation." />
+  <style>
+    :root{
+      --bg:#0b1020;
+      --panel:#0f1630;
+      --panel2:#0c132a;
+      --text:#e9eeff;
+      --muted:#b9c2e6;
+      --faint:#7f8ab8;
+      --line:rgba(255,255,255,.10);
+      --line2:rgba(255,255,255,.14);
+      --accent:#7aa2ff;
+      --accent2:#61f0c2;
+      --warn:#ffd27a;
+      --danger:#ff7aa8;
+      --shadow: 0 18px 50px rgba(0,0,0,.35);
+      --radius:16px;
+      --radius2:22px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
+
+    *{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+    body{
+      margin:0;
+      background:
+        radial-gradient(1200px 600px at 20% 10%, rgba(122,162,255,.25), transparent 60%),
+        radial-gradient(900px 500px at 80% 20%, rgba(97,240,194,.18), transparent 60%),
+        radial-gradient(900px 700px at 50% 90%, rgba(255,122,168,.10), transparent 60%),
+        var(--bg);
+      color:var(--text);
+      font-family:var(--sans);
+      line-height:1.5;
+    }
+
+    a{ color:var(--accent); text-decoration:none; }
+    a:hover{ text-decoration:underline; }
+    code, .mono{ font-family:var(--mono); }
+
+    .wrap{
+      max-width:1160px;
+      margin:0 auto;
+      padding:28px 18px 80px;
+      display:grid;
+      grid-template-columns: 320px 1fr;
+      gap:18px;
+    }
+
+    /* Top bar */
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:20;
+      padding:14px 18px;
+      background: linear-gradient(to bottom, rgba(11,16,32,.92), rgba(11,16,32,.66));
+      border-bottom:1px solid var(--line);
+      backdrop-filter: blur(10px);
+    }
+    .topbar-inner{
+      max-width:1160px;
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+    .brand{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      min-width:260px;
+    }
+    .brand h1{
+      margin:0;
+      font-size:16px;
+      letter-spacing:.2px;
+      font-weight:700;
+    }
+    .brand p{
+      margin:0;
+      color:var(--muted);
+      font-size:12.5px;
+    }
+    .actions{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid var(--line2);
+      background:rgba(255,255,255,.04);
+      color:var(--muted);
+      font-size:12.5px;
+      cursor:pointer;
+      user-select:none;
+      transition:.18s ease;
+    }
+    .pill:hover{ transform: translateY(-1px); border-color:rgba(255,255,255,.22); }
+    .pill strong{ color:var(--text); font-weight:600; }
+    .pill .dot{
+      width:8px;height:8px;border-radius:50%;
+      background:var(--accent2);
+      box-shadow:0 0 0 4px rgba(97,240,194,.12);
+    }
+
+    /* Sidebar */
+    .side{
+      position:sticky;
+      top:74px; /* below topbar */
+      align-self:start;
+      padding:14px;
+      border-radius:var(--radius2);
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border:1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+    .side h2{
+      margin:0 0 10px 0;
+      font-size:13px;
+      color:var(--muted);
+      font-weight:700;
+      letter-spacing:.3px;
+      text-transform:uppercase;
+    }
+
+    .search{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      margin-bottom:10px;
+    }
+    .search input{
+      width:100%;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid var(--line2);
+      background:rgba(0,0,0,.18);
+      color:var(--text);
+      outline:none;
+      font-size:13px;
+    }
+    .search input::placeholder{ color:rgba(185,194,230,.65); }
+    .search button{
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid var(--line2);
+      background:rgba(255,255,255,.04);
+      color:var(--muted);
+      cursor:pointer;
+      font-size:13px;
+    }
+    .search button:hover{ border-color:rgba(255,255,255,.22); }
+
+    .toc{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      margin-top:10px;
+    }
+    .toc a{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:9px 10px;
+      border-radius:12px;
+      border:1px solid transparent;
+      background:rgba(255,255,255,.02);
+      color:var(--text);
+      font-size:13.5px;
+      transition:.15s ease;
+    }
+    .toc a:hover{
+      border-color:rgba(255,255,255,.14);
+      background:rgba(255,255,255,.04);
+      text-decoration:none;
+      transform: translateY(-1px);
+    }
+    .toc .small{ color:var(--muted); font-size:12px; }
+    .kbd{
+      font-family:var(--mono);
+      font-size:11px;
+      color:var(--faint);
+      border:1px solid var(--line2);
+      padding:2px 6px;
+      border-radius:8px;
+      background:rgba(0,0,0,.18);
+    }
+
+    .tagbar{
+      margin-top:12px;
+      padding-top:12px;
+      border-top:1px solid var(--line);
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+    .tag{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      border:1px solid var(--line2);
+      background:rgba(0,0,0,.16);
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12.5px;
+      color:var(--muted);
+      cursor:pointer;
+      transition:.15s ease;
+    }
+    .tag:hover{ border-color:rgba(255,255,255,.22); transform: translateY(-1px); }
+    .tag[aria-pressed="true"]{
+      background:rgba(122,162,255,.18);
+      border-color:rgba(122,162,255,.55);
+      color:var(--text);
+    }
+    .tag .badge{
+      width:8px;height:8px;border-radius:50%;
+      background:var(--accent);
+      opacity:.9;
+    }
+
+    /* Main */
+    .main{
+      min-width:0;
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+      border:1px solid var(--line);
+      border-radius:var(--radius2);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+
+    .header{
+      padding:18px 18px 14px;
+      border-bottom:1px solid var(--line);
+    }
+    .header .kicker{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+      color:var(--muted);
+      font-size:13px;
+    }
+    .header .kicker .chip{
+      border:1px solid var(--line2);
+      background:rgba(0,0,0,.14);
+      padding:6px 10px;
+      border-radius:999px;
+    }
+    .header h3{
+      margin:10px 0 0;
+      font-size:22px;
+      line-height:1.2;
+      letter-spacing:.2px;
+    }
+    .header p{
+      margin:10px 0 0;
+      color:var(--muted);
+      max-width:78ch;
+    }
+
+    .section{
+      padding:14px 18px 18px;
+    }
+
+    .section h4{
+      margin:6px 0 10px;
+      font-size:16px;
+      letter-spacing:.2px;
+    }
+
+    .note{
+      border:1px dashed rgba(255,255,255,.18);
+      background: rgba(0,0,0,.14);
+      padding:12px 12px;
+      border-radius:14px;
+      color:var(--muted);
+      font-size:13px;
+    }
+    .note strong{ color:var(--text); }
+
+    details{
+      border:1px solid var(--line);
+      background:rgba(0,0,0,.14);
+      border-radius:16px;
+      overflow:hidden;
+      margin:12px 0;
+    }
+    summary{
+      list-style:none;
+      cursor:pointer;
+      padding:12px 12px;
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      user-select:none;
+    }
+    summary::-webkit-details-marker{ display:none; }
+    summary .marker{
+      width:10px;height:10px;border-radius:3px;
+      background:var(--accent);
+      margin-top:5px;
+      box-shadow: 0 0 0 4px rgba(122,162,255,.10);
+      flex: 0 0 auto;
+    }
+    summary .title{
+      flex:1 1 auto;
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      min-width:0;
+    }
+    summary .title .t{
+      font-weight:700;
+      color:var(--text);
+      font-size:14px;
+      line-height:1.25;
+    }
+    summary .title .s{
+      font-size:12.5px;
+      color:var(--muted);
+    }
+    summary .meta{
+      flex:0 0 auto;
+      display:flex;
+      gap:8px;
+      align-items:center;
+    }
+    .mini{
+      font-family:var(--mono);
+      font-size:11px;
+      color:var(--faint);
+      border:1px solid var(--line2);
+      background:rgba(0,0,0,.14);
+      padding:2px 8px;
+      border-radius:999px;
+    }
+
+    details[open] summary{
+      border-bottom:1px solid var(--line);
+      background:rgba(255,255,255,.02);
+    }
+    details .content{
+      padding:12px 14px 14px;
+      color:var(--text);
+    }
+    .content p{ margin:10px 0; color:var(--muted); }
+    .content ul{ margin:8px 0 0 18px; color:var(--muted); }
+    .content li{ margin:6px 0; }
+    .content .why{
+      margin-top:12px;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(0,0,0,.14);
+    }
+    .content .why .label{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      font-size:12.5px;
+      color:var(--text);
+      font-weight:700;
+      margin-bottom:6px;
+    }
+    .content .why .label .icon{
+      width:9px;height:9px;border-radius:50%;
+      background:var(--warn);
+      box-shadow:0 0 0 4px rgba(255,210,122,.12);
+    }
+    blockquote{
+      margin:10px 0;
+      padding:10px 12px;
+      border-left:3px solid rgba(122,162,255,.75);
+      background:rgba(0,0,0,.14);
+      border-radius:12px;
+      color:var(--text);
+    }
+    blockquote .src{
+      display:block;
+      margin-top:6px;
+      color:var(--faint);
+      font-size:12px;
+      font-family:var(--mono);
+    }
+
+    .grid2{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+    }
+    .box{
+      border:1px solid var(--line);
+      background:rgba(0,0,0,.14);
+      border-radius:16px;
+      padding:12px;
+    }
+    .box h5{
+      margin:0 0 8px;
+      font-size:13px;
+      color:var(--text);
+    }
+    .box ul{ margin:0 0 0 18px; color:var(--muted); }
+    .box li{ margin:6px 0; }
+
+    .rel{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:10px;
+      padding-top:10px;
+      border-top:1px solid var(--line);
+    }
+    .rel a{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--line2);
+      background:rgba(255,255,255,.03);
+      color:var(--muted);
+      font-size:12.5px;
+    }
+    .rel a:hover{ color:var(--text); text-decoration:none; border-color:rgba(255,255,255,.22); transform: translateY(-1px); }
+    .rel a .arrow{ opacity:.85; }
+
+    .foot{
+      margin-top:12px;
+      color:var(--faint);
+      font-size:12.5px;
+    }
+
+    .jumpTop{
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid var(--line2);
+      background:rgba(11,16,32,.72);
+      color:var(--muted);
+      box-shadow: var(--shadow);
+      cursor:pointer;
+      opacity:0;
+      transform: translateY(8px);
+      transition:.18s ease;
+      backdrop-filter: blur(10px);
+    }
+    .jumpTop.show{
+      opacity:1;
+      transform: translateY(0);
+    }
+    .jumpTop:hover{ border-color:rgba(255,255,255,.22); color:var(--text); }
+
+    /* Filtering behavior */
+    .hiddenBySearch{ display:none !important; }
+    .hiddenByTag{ display:none !important; }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .wrap{ grid-template-columns: 1fr; }
+      .side{ position:relative; top:auto; }
+      .topbar-inner{ flex-direction:column; align-items:flex-start; }
+      .brand{ min-width:0; }
+    }
+    @media (max-width: 720px){
+      .grid2{ grid-template-columns: 1fr; }
+      .header h3{ font-size:20px; }
+    }
+
+    /* Print (handy for lawyers) */
+    @media print{
+      body{ background:white; color:black; }
+      .topbar, .side, .jumpTop, .actions{ display:none !important; }
+      .wrap{ display:block; max-width:none; padding:0; }
+      .card{ box-shadow:none; border:1px solid #ccc; }
+      details{ break-inside: avoid; }
+      a{ color:black; text-decoration:underline; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Top Bar -->
+  <div class="topbar" id="top">
+    <div class="topbar-inner">
+      <div class="brand">
+        <h1>Lydia’s January to November Roadmap</h1>
+        <p>All paths converge on <strong>judicial review</strong> and <strong>independent representation</strong>.</p>
+      </div>
+      <div class="actions">
+        <div class="pill" id="expandAllBtn" role="button" tabindex="0" title="Expand all sections">
+          <span class="dot" aria-hidden="true"></span>
+          <span><strong>Expand</strong> all</span>
+          <span class="kbd">E</span>
+        </div>
+        <div class="pill" id="collapseAllBtn" role="button" tabindex="0" title="Collapse all sections">
+          <span class="dot" style="background:var(--danger); box-shadow:0 0 0 4px rgba(255,122,168,.12)" aria-hidden="true"></span>
+          <span><strong>Collapse</strong> all</span>
+          <span class="kbd">C</span>
+        </div>
+        <div class="pill" id="printBtn" role="button" tabindex="0" title="Print / Save as PDF">
+          <span class="dot" style="background:var(--warn); box-shadow:0 0 0 4px rgba(255,210,122,.12)" aria-hidden="true"></span>
+          <span><strong>Print</strong> / PDF</span>
+          <span class="kbd">P</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <!-- Sidebar -->
+    <aside class="side" aria-label="Navigation">
+      <h2>Navigate</h2>
+
+      <div class="search">
+        <input id="searchInput" type="search" placeholder="Search (e.g., 'judicial review', 'Central Market', 'counsel')…" autocomplete="off" />
+        <button id="clearSearchBtn" title="Clear search">Clear</button>
+      </div>
+
+      <nav class="toc" aria-label="Table of contents">
+        <a href="#sec-I"><span>I. End Goal</span><span class="small">overview</span></a>
+        <a href="#sec-II"><span>II. Contact CPS Regional Office</span><span class="small">status + access</span></a>
+        <a href="#sec-III"><span>III. Fork 1: Removal From Boarding School</span><span class="small">themes + evidence</span></a>
+        <a href="#theme-judicial"><span class="mono">Theme:</span> Judicial Review</a>
+        <a href="#theme-counsel"><span class="mono">Theme:</span> Access to Counsel</a>
+        <a href="#theme-isolation"><span class="mono">Theme:</span> Isolation / Retaliation</a>
+        <a href="#sec-IV"><span>IV. Fork 2: Leave in Boarding School</span><span class="small">pros/cons</span></a>
+        <a href="#sec-V"><span>V. Side Quest: DFPS / HHS OIG Complaint</span><span class="small">strategy</span></a>
+        <a href="#sec-VI"><span>VI. FBI Referral (Exploratory)</span><span class="small">optional</span></a>
+      </nav>
+
+      <div class="tagbar" aria-label="Theme filters">
+        <button class="tag" data-tag="judicial" aria-pressed="false" title="Filter items tagged: Judicial Review">
+          <span class="badge" aria-hidden="true"></span> Judicial Review
+        </button>
+        <button class="tag" data-tag="counsel" aria-pressed="false" title="Filter items tagged: Access to Counsel">
+          <span class="badge" aria-hidden="true" style="background:var(--accent2)"></span> Access to Counsel
+        </button>
+        <button class="tag" data-tag="isolation" aria-pressed="false" title="Filter items tagged: Isolation / Retaliation">
+          <span class="badge" aria-hidden="true" style="background:var(--danger)"></span> Isolation / Retaliation
+        </button>
+        <button class="tag" data-tag="timeline" aria-pressed="false" title="Filter items tagged: Timeline facts/quotes">
+          <span class="badge" aria-hidden="true" style="background:var(--warn)"></span> Timeline / Quotes
+        </button>
+      </div>
+
+      <p class="foot">
+        Tip: Press <span class="kbd">/</span> to jump to search.
+      </p>
+    </aside>
+
+    <!-- Main -->
+    <main class="main" aria-label="Roadmap content">
+
+      <!-- Cover Card -->
+      <section class="card" aria-label="Cover">
+        <div class="header">
+          <div class="kicker">
+            <span class="chip mono">Document Type: Strategy Roadmap</span>
+            <span class="chip mono">Target milestone: <strong>Nov 4, 2026</strong></span>
+            <span class="chip mono">Format: Expandable, cross-linked</span>
+          </div>
+          <h3>Purpose</h3>
+          <p>
+            This page organizes a January–November roadmap into decision forks and three core themes:
+            <strong>avoidance of judicial review</strong>, <strong>interference with access to counsel</strong>, and
+            <strong>isolation after reporting abuse</strong>. It is designed for quick attorney review and targeted follow-up.
+          </p>
+        </div>
+        <div class="section">
+          <div class="note">
+            <strong>Professional note:</strong> This is a structured summary for legal discussion. It is not legal advice and should be reviewed and revised by counsel for filings, evidentiary foundations, and jurisdiction-specific requirements.
+          </div>
+        </div>
+      </section>
+
+      <!-- I -->
+      <section class="card" id="sec-I" data-searchable>
+        <div class="header">
+          <div class="kicker">
+            <span class="chip mono">Section I</span>
+            <span class="chip mono">Goal framing</span>
+          </div>
+          <h3>I. End Goal</h3>
+          <p>Define the end-state and the “clock” (age 18 filing target), so every action below is oriented toward preparation and judicial access.</p>
+        </div>
+        <div class="section">
+          <details open data-tags="timeline">
+            <summary>
+              <span class="marker" aria-hidden="true"></span>
+              <span class="title">
+                <span class="t">Primary objective</span>
+                <span class="s">November 4, 2026 filing target (18th birthday)</span>
+              </span>
+              <span class="meta"><span class="mini">I</span></span>
+            </summary>
+            <div class="content">
+              <ul>
+                <li>Lydia intends to pursue legal action against her parents.</li>
+                <li>In an ideal scenario, all preparation is completed for a <strong>November 4, 2026</strong> filing (her 18th birthday).</li>
+              </ul>
+              <div class="rel">
+                <a href="#theme-judicial"><span class="arrow">↗</span> Related: Judicial review theme</a>
+                <a href="#sec-V"><span class="arrow">↗</span> Related: Complaint strategy</a>
+              </div>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- II -->
+      <section class="card" id="sec-II" data-searchable>
+        <div class="header">
+          <div class="kicker">
+            <span class="chip mono">Section II</span>
+            <span class="chip mono">Immediate fact-finding</span>
+          </div>
+          <h3>II. First Step: Contact CPS Regional Office</h3>
+          <p>Confirm case posture, placement, and whether any court mechanism exists (or can be initiated) to secure counsel and a hearing.</p>
+        </div>
+
+        <div class="section">
+          <details data-tags="judicial timeline" id="ii-a">
+            <summary>
+              <span class="marker" aria-hidden="true"></span>
+              <span class="title">
+                <span class="t">A. Case Status and Classification</span>
+                <span class="s">How was it classified? Is it open/closed/transferred? Safety plan and placement disclosures?</span>
+              </span>
+              <span class="meta"><span class="mini">II-A</span></span>
+            </summary>
+            <div class="content">
+              <ul>
+                <li>How was the investigation classified?
+                  <ul>
+                    <li>Reason to Believe</li>
+                    <li>Unable to Determine</li>
+                    <li>Ruled Out</li>
+                  </ul>
+                </li>
+                <li>What is the current case status?
+                  <ul>
+                    <li>Closed</li>
+                    <li>Transferred</li>
+                    <li>Still open</li>
+                  </ul>
+                </li>
+                <li>Was a <strong>safety plan</strong> in effect at the time of discharge from JPS?</li>
+                <li>Was CPS informed of any <strong>boarding school placement</strong>?</li>
+              </ul>
+              <div class="rel">
+                <a href="#iii-b1"><span class="arrow">↗</span> Related: CPS statements (Nov 18)</a>
+                <a href="#iii-b3"><span class="arrow">↗</span> Related: Hospital discharge w/out review</a>
+              </div>
+            </div>
+          </details>
+
+          <details data-tags="counsel timeline" id="ii-b">
+            <summary>
+              <span class="marker" aria-hidden="true" style="background:var(--accent2); box-shadow:0 0 0 4px rgba(97,240,194,.10)"></span>
+              <span class="title">
+                <span class="t">B. Placement and Access to Counsel</span>
+                <span class="s">Confirm where Lydia is, so counsel can reach her for active court dates and deadlines.</span>
+              </span>
+              <span class="meta"><span class="mini">II-B</span></span>
+            </summary>
+            <div class="content">
+              <div class="grid2">
+                <div class="box">
+                  <h5>Traffic case</h5>
+                  <ul>
+                    <li>First deadline: <strong>January 15</strong></li>
+                    <li>$50 payment and completion of Texas Driver Safety Course</li>
+                    <li>(Tina Marie may contact Municipal Court Clerk re: inability to pay)</li>
+                  </ul>
+                </div>
+                <div class="box">
+                  <h5>Assault charge</h5>
+                  <ul>
+                    <li>Court date: <strong>February 16, 2026</strong></li>
+                    <li>May be the only active procedural mechanism to bring Lydia before a judge</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="rel">
+                <a href="#theme-counsel"><span class="arrow">↗</span> Theme: Access to counsel</a>
+                <a href="#iii-c1"><span class="arrow">↗</span> Related: Repeated lack of independent representation</a>
+              </div>
+            </div>
+          </details>
+
+          <details data-tags="judicial" id="ii-c">
+            <summary>
+              <span class="marker" aria-hidden="true"></span>
+              <span class="title">
+                <span class="t">C. Court Filings</span>
+                <span class="s">Is there a pending motion? If not, is the absence itself the failure to address?</span>
+              </span>
+              <span class="meta"><span class="mini">II-C</span></span>
+            </summary>
+            <div class="content">
+              <ul>
+                <li>Verify whether Lydia’s motion is currently pending.</li>
+                <li>If pending, assess whether a <strong>writ of habeas corpus</strong> is available to secure a court appearance.</li>
+              </ul>
+              <div class="rel">
+                <a href="#sec-III"><span class="arrow">↗</span> Related: Fork 1 framing</a>
+                <a href="#theme-judicial"><span class="arrow">↗</span> Theme: Judicial review</a>
+              </div>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- III -->
+      <section class="card" id="sec-III" data-searchable>
+        <div class="header">
+          <div class="kicker">
+            <span class="chip mono">Section III</span>
+            <span class="chip mono">Fork decision</span>
+            <span class="chip mono">High-impact evidence</span>
+          </div>
+          <h3>III. Fork 1: Removal From Boarding School</h3>
+          <p>
+            This option is acknowledged as a long shot. A judge may conclude the placement is “safe.”
+            However, the central concern remains: <strong>no judge</strong> and <strong>no independent counsel</strong> despite abuse disclosures and institutional involvement.
+          </p>
+        </div>
+
+        <div class="section">
+
+          <details open data-tags="judicial counsel isolation">
+            <summary>
+              <span class="marker" aria-hidden="true"></span>
+              <span class="title">
+                <span class="t">A. Core Themes</span>
+                <span class="s">Use these as the “spine” for attorney intake, motions, and affidavits.</span>
+              </span>
+              <span class="meta"><span class="mini">III-A</span></span>
+            </summary>
+            <div class="content">
+              <ul>
+                <li><a href="#theme-judicial">Avoidance of judicial review</a></li>
+                <li><a href="#theme-counsel">Interference with access to counsel</a></li>
+                <li><a href="#theme-isolation">Isolation after reporting abuse</a></li>
+              </ul>
+              <div class="why">
+                <div class="label"><span class="icon" aria-hidden="true"></span>Why this matters</div>
+                <div class="mono" style="color:var(--muted); font-size:12.5px;">
+                  If no case is on file, that absence itself may be the central failure requiring correction.
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <!-- Theme Hub: Judicial -->
+          <div id="theme-judicial" class="card" style="margin-top:14px;">
+            <div class="header">
+              <div class="kicker">
+                <span class="chip mono">Theme Hub</span>
+                <span class="chip mono">judicial</span>
+              </div>
+              <h3>Theme: Avoidance of Judicial Review</h3>
+              <p>Events and statements suggesting major custody/placement decisions occurred without a hearing, a court order, or an appointment of counsel for Lydia.</p>
+            </div>
+            <div class="section">
+
+              <details data-tags="judicial timeline" id="iii-b1">
+                <summary>
+                  <span class="marker" aria-hidden="true"></span>
+                  <span class="title">
+                    <span class="t">B.1 CPS acknowledged safety concerns without court oversight</span>
+                    <span class="s">Nov 18, 2025 — CPS interview at home (Denise Dull)</span>
+                  </span>
+                  <span class="meta"><span class="mini">III-B1</span></span>
+                </summary>
+                <div class="content">
+                  <p><strong>November 18, 2025 — CPS interview at the home (Denise Dull):</strong></p>
+                  <ul>
+                    <li>“She’s safe here.”</li>
+                    <li>“We wouldn’t move her if she’s safe. We don’t need to put her in a shelter.”</li>
+                    <li>“I can’t give you permission like that.”</li>
+                    <li>“Parents can still report her as a runaway.”</li>
+                    <li>“I’ll write up the report and talk to my supervisor.”</li>
+                  </ul>
+                  <div class="why">
+                    <div class="label"><span class="icon" aria-hidden="true"></span>Why this matters</div>
+                    <ul>
+                      <li>CPS recognized safety concerns and an appropriate alternative placement, but declined to formalize placement, seek a court order, or initiate a hearing.</li>
+                      <li>Lydia was left with <strong>no judicial forum</strong> despite abuse disclosures.</li>
+                    </ul>
+                  </div>
+                  <div class="rel">
+                    <a href="#ii-a"><span class="arrow">↗</span> Related: Case status questions</a>
+                    <a href="#iii-b3"><span class="arrow">↗</span> Related: Hospital discharge w/out review</a>
+                    <a href="#theme-counsel"><span class="arrow">↗</span> Theme: Access to counsel</a>
+                  </div>
+                </div>
+              </details>
+
+              <details data-tags="judicial counsel" id="iii-b2">
+                <summary>
+                  <span class="marker" aria-hidden="true"></span>
+                  <span class="title">
+                    <span class="t">B.2 Major decisions discussed without court involvement</span>
+                    <span class="s">Emancipation discussions involving CPS and parents’ attorney; no Lydia counsel indicated</span>
+                  </span>
+                  <span class="meta"><span class="mini">III-B2</span></span>
+                </summary>
+                <div class="content">
+                  <ul>
+                    <li>Lengthy discussions occurred without Lydia having counsel.</li>
+                    <li>No indication of:
+                      <ul>
+                        <li>filing for removal of disabilities,</li>
+                        <li>requesting a hearing,</li>
+                        <li>appointing an Attorney Ad Litem.</li>
+                      </ul>
+                    </li>
+                  </ul>
+                  <div class="rel">
+                    <a href="#iii-c2"><span class="arrow">↗</span> Related: Parents’ attorney present</a>
+                    <a href="#theme-counsel"><span class="arrow">↗</span> Theme: Access to counsel</a>
+                  </div>
+                </div>
+              </details>
+
+              <details data-tags="judicial timeline" id="iii-b3">
+                <summary>
+                  <span class="marker" aria-hidden="true"></span>
+                  <span class="title">
+                    <span class="t">B.3 Hospital admission and discharge without judicial review</span>
+                    <span class="s">JPS admission after police involvement; discharge without hearing/AAL/placement order</span>
+                  </span>
+                  <span class="meta"><span class="mini">III-B3</span></span>
+                </summary>
+                <div class="content">
+                  <ul>
+                    <li>Lydia was admitted to JPS following police involvement.</li>
+                    <li>She was discharged without:
+                      <ul>
+                        <li>a court hearing,</li>
+                        <li>appointment of an AAL,</li>
+                        <li>or a placement order.</li>
+                      </ul>
+                    </li>
+                    <li>Boarding school placement reportedly followed immediately, again without court review.</li>
+                  </ul>
+
+                  <div class="why">
+                    <div class="label"><span class="icon" aria-hidden="true"></span>Why this matters</div>
+                    <p style="margin:0; color:var(--muted);">
+                      Judges are sensitive to the sequence:
+                      <span class="mono" style="display:block; margin-top:8px; color:var(--text);">
+                        CPS → police → psychiatric hospitalization → placement change
+                        <br/>with no judge ever involved
+                      </span>
+                    </p>
+                  </div>
+
+                  <div class="rel">
+                    <a href="#ii-c"><span class="arrow">↗</span> Related: Court filings / habeas question</a>
+                    <a href="#theme-judicial"><span class="arrow">↗</span> Theme: Judicial review</a>
+                  </div>
+                </div>
+              </details>
+
+              <details data-tags="judicial timeline" id="iii-b4">
+                <summary>
+                  <span class="marker" aria-hidden="true"></span>
+                  <span class="title">
+                    <span class="t">B.4 School absences and “running away” were caused by abuse</span>
+                    <span class="s">Protective flight after October abuse disclosure; Tracy acknowledges causal link (Nov 19)</span>
+                  </span>
+                  <span class="meta"><span class="mini">III-B4</span></span>
+                </summary>
+                <div class="content">
+                  <p>
+                    Lydia’s school absences and periods of staying away from home began immediately after her father’s sexual abuse in October and were a protective response.
+                    This causal link is explicitly acknowledged by Tracy.
+                  </p>
+
+                  <p><strong>November 19, 2025 — Central Market conversation (Tracy):</strong></p>
+                  <ul>
+                    <li>Tracy acknowledged Lydia left the home because of her father’s conduct.</li>
+                    <li>Tracy acknowledged Lydia was avoiding the home to stay away from him.</li>
+                  </ul>
+
+                  <p><strong>Additional corroboration discussed by Tracy:</strong></p>
+                  <ul>
+                    <li>Tracy described Lydia as not wanting to be at home because of her father.</li>
+                    <li>Tracy discussed installing locks on bedroom doors to prevent nighttime access.</li>
+                  </ul>
+
+                  <div class="why">
+                    <div class="label"><span class="icon" aria-hidden="true"></span>Legal significance</div>
+                    <ul>
+                      <li>Courts distinguish between status offenses (truancy/running away) and protective flight following abuse.</li>
+                      <li>Here, abuse was the initiating event; subsequent conduct was a direct consequence.</li>
+                    </ul>
+                  </div>
+
+                  <div class="rel">
+                    <a href="#iii-b6"><span class="arrow">↗</span> Related: Central Market admission quote</a>
+                    <a href="#theme-isolation"><span class="arrow">↗</span> Theme: Isolation / retaliation</a>
+                  </div>
+                </div>
+              </details>
+
+              <details data-tags="judicial" id="iii-b5">
+                <summary>
+                  <span class="marker" aria-hidden="true"></span>
+                  <span class="title">
+                    <span class="t">B.5 Corroboration by school officials (recommended next step)</span>
+                    <span class="s">Interview assistant principal + school counselor; obtain sworn affidavits</span>
+                  </span>
+                  <span class="meta"><span class="mini">III-B5</span></span>
+                </summary>
+                <div class="content">
+                  <p>Recommended: interview and obtain sworn affidavits from Lydia’s assistant principal and school counselor to corroborate observable changes after the October abuse disclosure:</p>
+                  <ul>
+                    <li>changes in attendance patterns,</li>
+                    <li>emotional distress or dysregulation at school,</li>
+                    <li>reports of fear, instability, or safety concerns,</li>
+                    <li>requests for help or disclosure-related behaviors,</li>
+                    <li>increased involvement of counseling or administrative intervention.</li>
+                  </ul>
+                  <div class="why">
+                    <div class="label"><span class="icon" aria-hidden="true"></span>Why this matters</div>
+                    <ul>
+                      <li>School officials are neutral mandatory reporters with daily observational access.</li>
+                      <li>Third-party corroboration supports causation, credibility, and harm.</li>
+                    </ul>
+                  </div>
+                  <div class="rel">
+                    <a href="#theme-isolation"><span class="arrow">↗</span> Theme: Isolation / retaliation</a>
+                    <a href="#theme-counsel"><span class="arrow">↗</span> Theme: Access to counsel</a>
+                  </div>
+                </div>
+              </details>
+
+              <details data-tags="judicial timeline" id="iii-b6">
+                <summary>
+                  <span class="marker" aria-hidden="true" style="background:var(--warn); box-shadow:0 0 0 4px rgba(255,210,122,.12)"></span>
+                  <span class="title">
+                    <span class="t">B.6 Central Market admission of sexual contact and acknowledgment of wrongfulness</span>
+                    <span class="s">Nov 19, 2025 — Central Market, Southlake, TX (Tracy Hall)</span>
+                  </span>
+                  <span class="meta"><span class="mini">III-B6</span></span>
+                </summary>
+                <div class="content">
+                  <p><strong>Date:</strong> November 19, 2025<br/>
+                     <strong>Location:</strong> Central Market, Southlake, Texas<br/>
+                     <strong>Source:</strong> Audio transcript (Tina Marie Molinar / Tracy Hall)<br/>
+                     <strong>Speaker:</strong> Tracy Hall</p>
+
+                  <blockquote>
+                    “So he takes her keys while she’s asleep, takes them off the ring, and then tries to grab at her phone while she’s sleeping with it.
+                    <strong>So while he’s grabbing she feels like he’s touching her boobs.</strong>”
+                    <span class="src">~20:58–21:05</span>
+                  </blockquote>
+
+                  <blockquote>
+                    “<strong>What he did was not okay</strong>, but he’s not like, ‘Oh, let me feel you up.’ Like he’s trying to get your phone from you.”
+                    <span class="src">~21:11–21:18</span>
+                  </blockquote>
+
+                  <div class="why">
+                    <div class="label"><span class="icon" aria-hidden="true"></span>Legal significance</div>
+                    <ul>
+                      <li>First-party parental admission describing sexual contact while the child was asleep.</li>
+                      <li>Explicit acknowledgment of wrongdoing.</li>
+                      <li>Corroborates Lydia’s initial disclosure.</li>
+                    </ul>
+                  </div>
+
+                  <div class="rel">
+                    <a href="#theme-isolation"><span class="arrow">↗</span> Theme: Isolation / retaliation</a>
+                    <a href="#theme-counsel"><span class="arrow">↗</span> Theme: Access to counsel</a>
+                  </div>
+                </div>
+              </details>
+
+            </div>
+          </div>
+
+          <!-- Theme Hub: Counsel -->
+          <div id="theme-counsel" class="card" style="margin-top:14px;">
+            <div class="header">
+              <div class="kicker">
+                <span class="chip mono">Theme Hub</span>
+                <span class="chip mono">counsel</span>
+              </div>
+              <h3>Theme: Interference With Access to Counsel</h3>
+              <p>Structural imbalance: parents have counsel; Lydia allegedly lacks independent representation and is routed through adverse parties’ attorneys.</p>
+            </div>
+            <div class="section">
+
+              <details data-tags="counsel" id="iii-c1">
+                <summary>
+                  <span class="marker" aria-hidden="true" style="background:var(--accent2); box-shadow:0 0 0 4px rgba(97,240,194,.10)"></span>
+                  <span class="title">
+                    <span class="t">C.1 Repeated lack of independent representation</span>
+                    <span class="s">Parents have multiple attorneys; Lydia allegedly told counsel must go through parents’ attorneys</span>
+                  </span>
+                  <span class="meta"><span class="mini">III-C1</span></span>
+                </summary>
+                <div class="content">
+                  <ul>
+                    <li>Parents retained multiple attorneys.</li>
+                    <li>Lydia was told:
+                      <ul>
+                        <li>she could not retain her own lawyer,</li>
+                        <li>communications must go through parents’ attorneys,</li>
+                        <li>CPS communication must go through parents’ counsel.</li>
+                      </ul>
+                    </li>
+                  </ul>
+                  <div class="why">
+                    <div class="label"><span class="icon" aria-hidden="true"></span>Why this matters</div>
+                    <p style="margin:0; color:var(--muted);">
+                      A minor reporting abuse against adverse parents cannot meaningfully access counsel without court appointment.
+                    </p>
+                  </div>
+                  <div class="rel">
+                    <a href="#ii-b"><span class="arrow">↗</span> Related: Placement & deadlines</a>
+                    <a href="#iii-c2"><span class="arrow">↗</span> Related: Parents’ attorney present</a>
+                  </div>
+                </div>
+              </details>
+
+              <details data-tags="counsel" id="iii-c2">
+                <summary>
+                  <span class="marker" aria-hidden="true" style="background:var(--accent2); box-shadow:0 0 0 4px rgba(97,240,194,.10)"></span>
+                  <span class="title">
+                    <span class="t">C.2 Emancipation discussion with parents’ attorney present</span>
+                    <span class="s">Participants include CPS, parents, parents’ attorney; no Lydia attorney</span>
+                  </span>
+                  <span class="meta"><span class="mini">III-C2</span></span>
+                </summary>
+                <div class="content">
+                  <p><strong>Participants:</strong></p>
+                  <ul>
+                    <li>CPS worker</li>
+                    <li>Parents</li>
+                    <li>Parents’ attorney (Monica)</li>
+                    <li>Lydia</li>
+                    <li><strong>No attorney representing Lydia</strong></li>
+                  </ul>
+                  <div class="why">
+                    <div class="label"><span class="icon" aria-hidden="true"></span>Why this matters</div>
+                    <ul>
+                      <li>Parents’ counsel owed duties only to the parents.</li>
+                      <li>Structural imbalance courts may view as fundamentally unfair.</li>
+                    </ul>
+                  </div>
+                  <div class="rel">
+                    <a href="#iii-b2"><span class="arrow">↗</span> Related: Major decisions w/out court involvement</a>
+                    <a href="#theme-judicial"><span class="arrow">↗</span> Theme: Judicial review</a>
+                  </div>
+                </div>
+              </details>
+
+              <details data-tags="counsel isolation timeline" id="iii-c3">
+                <summary>
+                  <span class="marker" aria-hidden="true" style="background:var(--danger); box-shadow:0 0 0 4px rgba(255,122,168,.10)"></span>
+                  <span class="title">
+                    <span class="t">C.3 Isolation from adults who could help access counsel</span>
+                    <span class="s">Dec 11 transcript (Lydia & Tracy) — dispute over who is blocking placement</span>
+                  </span>
+                  <span class="meta"><span class="mini">III-C3</span></span>
+                </summary>
+                <div class="content">
+                  <p><strong>December 11 transcript (Lydia and Tracy):</strong></p>
+                  <ul>
+                    <li>Tracy: “Honey, she’s talked to CPS, she’s talked to the police.”</li>
+                    <li>Lydia: “I WANT TO GO STAY WITH SOFIA WHERE I WAS DOING GOOD!”</li>
+                    <li>Tracy: “The courts have said you cannot go.”</li>
+                    <li>Lydia: “And YOU’RE the only one who has said I cannot be there.”</li>
+                  </ul>
+                  <div class="rel">
+                    <a href="#theme-isolation"><span class="arrow">↗</span> Theme: Isolation / retaliation</a>
+                    <a href="#theme-counsel"><span class="arrow">↗</span> Theme: Access to counsel</a>
+                  </div>
+                </div>
+              </details>
+
+            </div>
+          </div>
+
+          <!-- Theme Hub: Isolation -->
+          <div id="theme-isolation" class="card" style="margin-top:14px;">
+            <div class="header">
+              <div class="kicker">
+                <span class="chip mono">Theme Hub</span>
+                <span class="chip mono">isolation</span>
+              </div>
+              <h3>Theme: Isolation After Reporting Abuse</h3>
+              <p>Post-report restriction patterns (who can see her, where she can stay, access to phone/food/documentation), framed as safety/retaliation concerns.</p>
+            </div>
+            <div class="section">
+
+              <details data-tags="isolation timeline" id="iii-d1">
+                <summary>
+                  <span class="marker" aria-hidden="true" style="background:var(--danger); box-shadow:0 0 0 4px rgba(255,122,168,.10)"></span>
+                  <span class="title">
+                    <span class="t">D.1 Withdrawal of permission after CPS/police contact</span>
+                    <span class="s">Nov 28 text exchange — Tina provides neutral update; Tracy prohibits stays</span>
+                  </span>
+                  <span class="meta"><span class="mini">III-D1</span></span>
+                </summary>
+                <div class="content">
+                  <p><strong>November 28 text exchange (Tina → Tracy):</strong> Tina provided a neutral update on Lydia’s wellbeing and schooling.</p>
+                  <p><strong>Tracy’s response:</strong></p>
+                  <ul>
+                    <li>“At this time, Lydia is not to stay at your home. I have concerns for the safety of my child remaining where she is.”</li>
+                  </ul>
+                  <div class="rel">
+                    <a href="#iii-c3"><span class="arrow">↗</span> Related: Dec 11 isolation dispute</a>
+                    <a href="#theme-counsel"><span class="arrow">↗</span> Theme: Access to counsel</a>
+                  </div>
+                </div>
+              </details>
+
+              <details data-tags="isolation" id="iii-d2">
+                <summary>
+                  <span class="marker" aria-hidden="true" style="background:var(--danger); box-shadow:0 0 0 4px rgba(255,122,168,.10)"></span>
+                  <span class="title">
+                    <span class="t">D.2 Statements demonstrating fear of retaliation</span>
+                    <span class="s">Runaway report fears, phone confiscation, food control, avoidance of adults who reported</span>
+                  </span>
+                  <span class="meta"><span class="mini">III-D2</span></span>
+                </summary>
+                <div class="content">
+                  <p>Lydia expressed fear of:</p>
+                  <ul>
+                    <li>staying with adults who reported abuse,</li>
+                    <li>being reported as a runaway,</li>
+                    <li>phone confiscation,</li>
+                    <li>food access and control.</li>
+                  </ul>
+                  <p>These fears are internally consistent and tied to concrete actions.</p>
+                  <div class="rel">
+                    <a href="#iii-b1"><span class="arrow">↗</span> Related: “Parents can still report her as a runaway”</a>
+                    <a href="#iii-b6"><span class="arrow">↗</span> Related: Central Market admission</a>
+                  </div>
+                </div>
+              </details>
+
+              <details data-tags="isolation judicial" id="iii-d3">
+                <summary>
+                  <span class="marker" aria-hidden="true" style="background:var(--danger); box-shadow:0 0 0 4px rgba(255,122,168,.10)"></span>
+                  <span class="title">
+                    <span class="t">D.3 Boarding school placement after reporting (if confirmed)</span>
+                    <span class="s">Sequence concern: disclosures → CPS → hospitalization → placement change without court review</span>
+                  </span>
+                  <span class="meta"><span class="mini">III-D3</span></span>
+                </summary>
+                <div class="content">
+                  <ul>
+                    <li>If verified, placement occurred:
+                      <ul>
+                        <li>after abuse disclosures,</li>
+                        <li>after CPS involvement,</li>
+                        <li>after hospitalization,</li>
+                        <li>without court review or independent counsel.</li>
+                      </ul>
+                    </li>
+                  </ul>
+                  <div class="rel">
+                    <a href="#iii-b3"><span class="arrow">↗</span> Related: Hospital discharge w/out review</a>
+                    <a href="#theme-judicial"><span class="arrow">↗</span> Theme: Judicial review</a>
+                    <a href="#theme-counsel"><span class="arrow">↗</span> Theme: Access to counsel</a>
+                  </div>
+                </div>
+              </details>
+
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- IV -->
+      <section class="card" id="sec-IV" data-searchable>
+        <div class="header">
+          <div class="kicker">
+            <span class="chip mono">Section IV</span>
+            <span class="chip mono">Alternate fork</span>
+          </div>
+          <h3>IV. Fork 2: Leave Lydia in Boarding School</h3>
+          <p>Weigh safety and timeline advantages against preference, signaling, and the possibility that placement functions as punishment for reporting.</p>
+        </div>
+
+        <div class="section">
+          <details open data-tags="judicial counsel isolation">
+            <summary>
+              <span class="marker" aria-hidden="true"></span>
+              <span class="title">
+                <span class="t">A. Pros / B. Cons</span>
+                <span class="s">Use as an attorney discussion checklist for short-term strategy.</span>
+              </span>
+              <span class="meta"><span class="mini">IV</span></span>
+            </summary>
+            <div class="content">
+              <div class="grid2">
+                <div class="box">
+                  <h5>Pros</h5>
+                  <ul>
+                    <li>Lydia is physically safe (assumed).</li>
+                    <li>Fewer than ten months remain.</li>
+                    <li>Allows focus on future litigation.</li>
+                  </ul>
+                </div>
+                <div class="box">
+                  <h5>Cons</h5>
+                  <ul>
+                    <li>Likely contrary to Lydia’s expressed wishes.</li>
+                    <li>Sends a deterrent message to Nyla regarding disclosure.</li>
+                    <li>Functions as punishment for seeking safety.</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="rel">
+                <a href="#theme-isolation"><span class="arrow">↗</span> Theme: Isolation / retaliation</a>
+                <a href="#theme-judicial"><span class="arrow">↗</span> Theme: Judicial review</a>
+              </div>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- V -->
+      <section class="card" id="sec-V" data-searchable>
+        <div class="header">
+          <div class="kicker">
+            <span class="chip mono">Section V</span>
+            <span class="chip mono">Administrative accountability</span>
+          </div>
+          <h3>V. Side Quest: DFPS / HHS OIG Complaint (Denise Dull)</h3>
+          <p>Decide whether to disclose now or preserve evidence for civil action and potential state liability—strategy depends on counsel’s view of timing and risk.</p>
+        </div>
+
+        <div class="section">
+          <details data-tags="judicial">
+            <summary>
+              <span class="marker" aria-hidden="true"></span>
+              <span class="title">
+                <span class="t">Decision point</span>
+                <span class="s">Expose all evidence now vs. preserve for later litigation</span>
+              </span>
+              <span class="meta"><span class="mini">V</span></span>
+            </summary>
+            <div class="content">
+              <ul>
+                <li>Decide whether to:
+                  <ul>
+                    <li>expose all evidence to the state now, or</li>
+                    <li>preserve it for Lydia’s civil action and potential state liability.</li>
+                  </ul>
+                </li>
+              </ul>
+              <div class="rel">
+                <a href="#iii-b1"><span class="arrow">↗</span> Related: CPS statements (Nov 18)</a>
+                <a href="#theme-judicial"><span class="arrow">↗</span> Theme: Judicial review</a>
+              </div>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- VI -->
+      <section class="card" id="sec-VI" data-searchable>
+        <div class="header">
+          <div class="kicker">
+            <span class="chip mono">Section VI</span>
+            <span class="chip mono">Exploratory</span>
+          </div>
+          <h3>VI. Another Avenue: FBI Referral (Exploratory)</h3>
+          <p>Low-probability path, but may be relevant if local prosecution remains absent despite reported sexual crime against a minor.</p>
+        </div>
+
+        <div class="section">
+          <details data-tags="judicial">
+            <summary>
+              <span class="marker" aria-hidden="true"></span>
+              <span class="title">
+                <span class="t">Exploratory referral considerations</span>
+                <span class="s">FBI may defer to local authorities; consider evidentiary package and counsel’s guidance</span>
+              </span>
+              <span class="meta"><span class="mini">VI</span></span>
+            </summary>
+            <div class="content">
+              <ul>
+                <li>FBI may defer to local authorities.</li>
+                <li>However, there is evidence of a sexual crime against a minor that remains unprosecuted.</li>
+              </ul>
+              <div class="rel">
+                <a href="#iii-b6"><span class="arrow">↗</span> Related: Central Market admission quote</a>
+                <a href="#theme-judicial"><span class="arrow">↗</span> Theme: Judicial review</a>
+              </div>
+            </div>
+          </details>
+
+          <div class="note" style="margin-top:12px;">
+            <strong>Attorney-facing prompt:</strong> “If we do nothing else, what is the fastest lawful mechanism to secure (1) independent counsel for Lydia and (2) a court hearing?”
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <section class="card" aria-label="Footer">
+        <div class="section">
+          <div class="note">
+            <strong>How to use in a meeting:</strong>
+            Open the sections that match your attorney’s questions. Use the theme hubs (Judicial Review / Counsel / Isolation) to jump between related facts and quotations quickly.
+          </div>
+          <p class="foot" style="margin-top:10px;">
+            Keyboard: <span class="kbd">/</span> focus search · <span class="kbd">E</span> expand all · <span class="kbd">C</span> collapse all · <span class="kbd">P</span> print
+          </p>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <button class="jumpTop" id="jumpTopBtn" title="Back to top">↑ Top</button>
+
+  <script>
+    (function(){
+      const $ = (sel, root=document) => root.querySelector(sel);
+      const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+
+      const searchInput = $("#searchInput");
+      const clearBtn = $("#clearSearchBtn");
+      const expandAllBtn = $("#expandAllBtn");
+      const collapseAllBtn = $("#collapseAllBtn");
+      const printBtn = $("#printBtn");
+      const jumpTopBtn = $("#jumpTopBtn");
+
+      const allDetails = $$("details");
+      const searchableCards = $$("[data-searchable]");
+      const filterTags = $$(".tag[data-tag]");
+
+      let activeTags = new Set();
+
+      // --- Expand/Collapse ---
+      function setAllDetails(open){
+        allDetails.forEach(d => d.open = open);
+      }
+
+      function clickish(el, fn){
+        el.addEventListener("click", fn);
+        el.addEventListener("keydown", (e) => {
+          if(e.key === "Enter" || e.key === " "){
+            e.preventDefault();
+            fn();
+          }
+        });
+      }
+
+      clickish(expandAllBtn, () => setAllDetails(true));
+      clickish(collapseAllBtn, () => setAllDetails(false));
+      clickish(printBtn, () => window.print());
+
+      // --- Search filtering (matches text across cards + details) ---
+      function normalize(s){
+        return (s || "").toLowerCase().replace(/\s+/g, " ").trim();
+      }
+
+      function applySearch(){
+        const q = normalize(searchInput.value);
+        if(!q){
+          // clear search state
+          $$("details, section.card").forEach(el => el.classList.remove("hiddenBySearch"));
+          // keep tag filtering in effect
+          applyTagFilter();
+          return;
+        }
+
+        // Always clear prior first
+        $$("details, section.card").forEach(el => el.classList.remove("hiddenBySearch"));
+
+        // Hide details that don't match query (textContent)
+        allDetails.forEach(d => {
+          const text = normalize(d.textContent);
+          if(!text.includes(q)) d.classList.add("hiddenBySearch");
+        });
+
+        // Hide entire cards if none of their details/visible content match
+        searchableCards.forEach(card => {
+          const visibleDetails = $$("details:not(.hiddenBySearch)", card);
+          const cardText = normalize(card.textContent);
+          const matchesCard = cardText.includes(q) || visibleDetails.length > 0;
+          if(!matchesCard) card.classList.add("hiddenBySearch");
+        });
+
+        // Re-apply tag filtering on top
+        applyTagFilter();
+      }
+
+      clearBtn.addEventListener("click", () => {
+        searchInput.value = "";
+        applySearch();
+        searchInput.focus();
+      });
+
+      searchInput.addEventListener("input", applySearch);
+
+      // --- Tag filtering ---
+      function applyTagFilter(){
+        const hasTags = activeTags.size > 0;
+
+        // Reset
+        allDetails.forEach(d => d.classList.remove("hiddenByTag"));
+        searchableCards.forEach(card => card.classList.remove("hiddenByTag"));
+
+        if(!hasTags) return;
+
+        allDetails.forEach(d => {
+          const tags = (d.getAttribute("data-tags") || "").split(/\s+/).filter(Boolean);
+          const matches = tags.some(t => activeTags.has(t));
+          if(!matches) d.classList.add("hiddenByTag");
+        });
+
+        searchableCards.forEach(card => {
+          const visibleDetails = $$("details:not(.hiddenByTag):not(.hiddenBySearch)", card);
+          // If a card has no visible details and its own text doesn't carry tags, hide it.
+          if(visibleDetails.length === 0) card.classList.add("hiddenByTag");
+        });
+      }
+
+      filterTags.forEach(btn => {
+        btn.addEventListener("click", () => {
+          const t = btn.getAttribute("data-tag");
+          const pressed = btn.getAttribute("aria-pressed") === "true";
+          btn.setAttribute("aria-pressed", String(!pressed));
+
+          if(pressed) activeTags.delete(t);
+          else activeTags.add(t);
+
+          applyTagFilter();
+        });
+      });
+
+      // --- Keyboard shortcuts ---
+      document.addEventListener("keydown", (e) => {
+        if(e.key === "/" && document.activeElement !== searchInput){
+          e.preventDefault();
+          searchInput.focus();
+          return;
+        }
+        if(e.target && (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA")) return;
+
+        if(e.key.toLowerCase() === "e") setAllDetails(true);
+        if(e.key.toLowerCase() === "c") setAllDetails(false);
+        if(e.key.toLowerCase() === "p") window.print();
+      });
+
+      // --- Back to top button ---
+      window.addEventListener("scroll", () => {
+        if(window.scrollY > 600) jumpTopBtn.classList.add("show");
+        else jumpTopBtn.classList.remove("show");
+      });
+      jumpTopBtn.addEventListener("click", () => {
+        window.scrollTo({ top:0, behavior:"smooth" });
+      });
+
+      // Initial apply
+      applySearch();
+      applyTagFilter();
+    })();
+  </script>
+</body>
+</html>
